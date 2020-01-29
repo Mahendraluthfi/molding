@@ -20,21 +20,21 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-4 col-sm-12">
-                <form class="card auth_form">
+                <?php echo form_open('login/submit', array('class' => 'card auth_form')); ?>
                     <div class="header">
                         <img class="logo" src="<?php echo base_url() ?>assets/images/mas_icon.png" alt="">
                         <!-- <h5>Log in</h5> -->
                         <h5>Molding Dashboard</h5>
                     </div>
-                    <div class="body">
+                    <div class="body">                        
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Username">
+                            <input type="text" class="form-control" placeholder="Username" name="username">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Password">
+                            <input type="password" class="form-control" placeholder="Password" name="password">
                             <div class="input-group-append">                                
                                 <span class="input-group-text"><i class="zmdi zmdi-lock"></i></span>
                             </div>                            
@@ -43,7 +43,8 @@
                             <input id="remember_me" type="checkbox">
                             <label for="remember_me">Remember Me</label>
                         </div> -->
-                        <a href="index.html" class="btn btn-primary btn-block waves-effect waves-light">SIGN IN</a>                        
+                        <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">SIGN IN</button>                        
+                        <?php echo $this->session->flashdata('msg'); ?>                  
                         <div class="signin_with mt-3">
                                 <!-- <p class="mb-0">or Sign Up using</p>
                                 <button class="btn btn-primary btn-icon btn-icon-mini btn-round facebook"><i class="zmdi zmdi-facebook"></i></button>
@@ -51,7 +52,7 @@
                                 <button class="btn btn-primary btn-icon btn-icon-mini btn-round google"><i class="zmdi zmdi-google-plus"></i></button> -->
                         </div>
                     </div>
-                </form>
+                <?php echo form_close(); ?>
                 <div class="copyright text-center">
                     &copy;
                     <script>document.write(new Date().getFullYear())</script>,
