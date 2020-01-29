@@ -6,9 +6,11 @@
         //menghitung selisih dengan hasil detik
         $diff =  $waktu_awal - $waktu_akhir;           
         if($diff >= 21545){                  
-           $status = '<div class="w_icon green mt-3 ml-2"><i class="zmdi zmdi-power"></i></div>';
+           $status = '<div class="w_icon green mt-3 ml-4"><i class="zmdi zmdi-power"></i></div>';
+           $text = "Online";
         }else{
-           $status = '<div class="w_icon blush mt-3 ml-2"><i class="zmdi zmdi-power"></i></div>';                        
+           $status = '<div class="w_icon blush mt-3 ml-4"><i class="zmdi zmdi-power"></i></div>';                        
+           $text = "Offline";
         } 
 
         $sql_today = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$data->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY)")->row();
