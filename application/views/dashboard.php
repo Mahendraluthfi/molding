@@ -19,5 +19,5 @@
     var machineload = setInterval(
         function (){            
             $('#machineload').load('<?php echo base_url() ?>home/machineload').fadeIn("slow");                   
-        }, 1000);
+        }, 3000);
 </script>

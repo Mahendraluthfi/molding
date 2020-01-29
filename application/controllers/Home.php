@@ -23,6 +23,12 @@ class Home extends CI_Controller {
 		$data['node'] = $this->db->get('node_data')->result();
 		$this->load->view('_machineload', $data);
 	}
+
+	public function detail($id)
+	{
+		$data['content'] = 'detail';
+		$this->load->view('index', $data);
+	}
 }
 
 /* End of file Home.php */
