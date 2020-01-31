@@ -29,6 +29,11 @@ class Home extends CI_Controller {
 		$data['content'] = 'detail';
 		$this->load->view('index', $data);
 	}
+
+	public function chart()
+	{
+		$this->load->view('_chart');
+	}
 }
 
 /* End of file Home.php */
