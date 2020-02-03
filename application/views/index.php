@@ -50,8 +50,8 @@
                 <div class="user-info">
                     <a class="image" href="#"><img src="<?php echo base_url() ?>assets/images/logo-admin.png" alt="User" height="32" width="25"></a>
                     <div class="detail" style="text-align: left;">
-                        <h4>Michael</h4>
-                        <small>Admin</small>                        
+                        <h4>Admin</h4>
+                        <!-- <small>Admin</small>                         -->
                     </div>
                 </div>
             </li>

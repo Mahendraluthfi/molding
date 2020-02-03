@@ -20,23 +20,9 @@
             <div class="col-3" style="padding: 5px;">
                 <div class="card">
                     <div class="body">
-                        <h5 class="text-center">Machine Information</h5>
-                        <ul class="row profile_state list-unstyled">
-                            <li class="col-12" style="margin-bottom: 5px;">
-                                <div class="body bg-cyan" style="padding: 5px;">
-                                    <i class="zmdi zmdi-chart"></i>
-                                    <h4>2,365</h4>
-                                    <span>Today Count</span>
-                                </div>
-                            </li>
-                            <li class="col-12" style="margin-bottom: 5px;">
-                                <div class="body bg-warning" style="padding: 5px; color: white;">
-                                    <i class="zmdi zmdi-time"></i>
-                                    <h4>2,365</h4>
-                                    <span>Average Cycle Time</span>
-                                </div>
-                            </li>                                                            
-                        </ul>
+                        <div id="mc_info">
+                            
+                        </div>
                     </div>
                 </div>                
             </div>
@@ -54,10 +40,16 @@
 </div>
 
 <script>
+var id = "<?php echo $this->uri->segment(3); ?>";
 
 var chart = setInterval(
     function (){            
-    $('#chart').load('<?php echo base_url() ?>home/chart').fadeIn("slow");                   
+    $('#chart').load('<?php echo base_url() ?>home/chart/'+id).fadeIn("slow");                   
+}, 3000);
+
+var mc_info = setInterval(
+    function (){            
+    $('#mc_info').load('<?php echo base_url() ?>home/mcinfo/'+id).fadeIn("slow");                   
 }, 3000);
 
 </script>
