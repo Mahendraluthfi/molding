@@ -3,12 +3,10 @@
 </div>
 
 <script>
-	Highcharts.chart('container', {
-    chart: {
-        type: 'column'
-    },
+
+Highcharts.chart('container', {
     title: {
-        text: 'Summary Hourly Cycle Time & Output'
+        text: 'Summary Hourly Cycle Time & Output'        
     },
     xAxis: {
         categories: [
@@ -19,7 +17,7 @@
             '5th',
             '6th',
             '7th',
-            '8th',
+            '8th'
         ]
     },
     yAxis: [{
@@ -33,54 +31,73 @@
         },
         opposite: true
     }],
-    legend: {
-        shadow: false
-    },
-    tooltip: {
-        shared: true
-    },
     plotOptions: {
-        column: {
-            grouping: false,
-            shadow: false,
-            borderWidth: 0
-        },
         series: {
             animation: false
         }     
     },
     series: [{
-        name: 'CT Morning',
-        color: 'rgba(165,170,217,1)',
-        data: [150, 73, 20,150, 73, 20,150, 73],
-        pointPadding: 0.3,
-        pointPlacement: -0.2
+        type: 'column',
+        name: 'Morning CycleTime',
+        data: [
+            <?php echo round($jam1->jam1,1) ?>,
+            <?php echo round($jam2->jam2,1) ?>,
+            <?php echo round($jam3->jam3,1) ?>,
+            <?php echo round($jam4->jam4,1) ?>,
+            <?php echo round($jam5->jam5,1) ?>,
+            <?php echo round($jam6->jam6,1) ?>,
+            <?php echo round($jam7->jam7,1) ?>,
+            <?php echo round($jam8->jam8,1) ?>
+        ]
     }, {
-        name: 'CT Evening',
-        color: 'rgba(126,86,134,.9)',
-        data: [140, 90, 40,140, 90, 40,140, 90],
-        pointPadding: 0.4,
-        pointPlacement: -0.2
+        type: 'column',
+        name: 'Evening CycleTime',
+        data: [
+
+            <?php echo round($jam9->jam9,1) ?>,
+            <?php echo round($jam10->jam10,1) ?>,
+            <?php echo round($jam11->jam11,1) ?>,
+            <?php echo round($jam12->jam12,1) ?>,
+            <?php echo round($jam13->jam13,1) ?>,
+            <?php echo round($jam14->jam14,1) ?>,
+            <?php echo round($jam15->jam15,1) ?>,
+            <?php echo round($jam16->jam16,1) ?> 
+        ]
     }, {
-        name: 'Output Morning',
-        color: 'rgba(248,161,63,1)',
-        data: [183.6, 178.8, 198.5,183.6, 178.8, 198.5,183.6, 178.8],
-        tooltip: {            
-            valueSuffix: ' pcs'
-        },
+        type: 'spline',
+        name: 'Morning Output',
+        data: [
+             <?php echo round($op1->op1/$cc,1) ?>,
+            <?php echo round($op2->op2/$cc,1) ?>,
+            <?php echo round($op3->op3/$cc,1) ?>,
+            <?php echo round($op4->op4/$cc,1) ?>,
+            <?php echo round($op5->op5/$cc,1) ?>,
+            <?php echo round($op6->op6/$cc,1) ?>,
+            <?php echo round($op7->op7/$cc,1) ?>,
+            <?php echo round($op8->op8/$cc,1) ?>
+        ],
         pointPadding: 0.3,
         pointPlacement: 0.2,
         yAxis: 1
     }, {
-        name: 'Output Evening',
-        color: 'rgba(186,60,61,.9)',
-        data: [203.6, 198.8, 208.5,203.6, 198.8, 208.5,203.6, 198.8],
-        tooltip: {            
-            valueSuffix: ' pcs'
-        },
+        type: 'spline',
+        name: 'Evening Output',
+        data: [
+
+            <?php echo round($op9->op9/$cc,1) ?>,
+            <?php echo round($op10->op10/$cc,1) ?>,
+            <?php echo round($op11->op11/$cc,1) ?>,
+            <?php echo round($op12->op12/$cc,1) ?>,
+            <?php echo round($op13->op13/$cc,1) ?>,
+            <?php echo round($op14->op14/$cc,1) ?>,
+            <?php echo round($op15->op15/$cc,1) ?>,
+            <?php echo round($op16->op16/$cc,1) ?>  
+        ],
         pointPadding: 0.4,
         pointPlacement: 0.2,
         yAxis: 1
+       
     }]
 });
+
 </script>

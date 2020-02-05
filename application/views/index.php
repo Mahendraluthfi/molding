@@ -55,16 +55,10 @@
                     </div>
                 </div>
             </li>
-            <li><a href="index.html"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-            <li><a href="my-profile.html"><i class="zmdi zmdi-account"></i><span>Our Profile</span></a></li>
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>App</span></a>
-                <ul class="ml-menu">
-                    <li><a href="mail-inbox.html">Email</a></li>
-                    <li><a href="chat.html">Chat Apps</a></li>
-                    <li><a href="events.html">Calendar</a></li>
-                    <li><a href="contact.html">Contact</a></li>                    
-                </ul>
-            </li>                        
+            <li><a href="<?php echo base_url() ?>"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            <li><a href="#"><i class="zmdi zmdi-watch"></i><span>Downtime Monitoring</span></a></li>                                
+            <li><a href="#"><i class="zmdi zmdi-tag"></i><span>Output Monitoring</span></a></li>                                
+            <li><a href="#"><i class="zmdi zmdi-badge-check"></i><span>Target Monitoring</span></a></li>                                
             <li><a href="<?php echo base_url('login/logout') ?>" onclick="return confirm('Are you sure ?')"><i class="zmdi zmdi-power"></i><span>Logout</span></a></li>
         </ul>
     </div>
