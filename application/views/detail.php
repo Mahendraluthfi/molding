@@ -8,7 +8,7 @@
         <div class="col-12">
             <h2>Detail node</h2>
             <ul class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url('home') ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
                 <li class="breadcrumb-item active">Detail Node</li>
             </ul>
             <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
@@ -28,7 +28,7 @@
             </div>
             <div class="col-9" style="padding: 5px;">
                 <div class="card">
-                    <div class="body">
+                    <div class="body" style="padding: 3px;">
                         <div id="chart">
                                                         
                         </div>

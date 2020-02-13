@@ -3,7 +3,6 @@
             <label class="col-10">
                 <h6 class="text-primary">Machine Information</h6>                
             </label>
-            <label class="col-2"><a href="#" onclick="set()"><i class="zmdi zmdi-settings"></i></a></label>
         </div>
         <div class="form-group row" style="margin: 0px; padding: 0px;">
             <label class="col-5 text-left mt-2">Status</label>

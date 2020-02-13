@@ -1,34 +1,29 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Front extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		if($this->auth->is_logged_in() == false)
-	    {	     
-	        redirect('login');
-	    }	 		
 		date_default_timezone_set('Asia/Jakarta');	    
+		
 	}
 
 	public function index()
 	{
-		$data['content'] = 'dashboard';
-		$this->load->view('index', $data);
+		$this->load->view('front/home');		
 	}
 
 	public function machineload()
 	{
 		$data['node'] = $this->db->query("SELECT * FROM node_data ORDER BY position ASC")->result();
-		$this->load->view('_machineload', $data);
+		$this->load->view('front/_mcload', $data);
 	}
 
 	public function detail($id)
-	{
-		$data['content'] = 'detail';
-		$this->load->view('index', $data);
+	{		
+		$this->load->view('front/detail');
 	}
 
 	public function chart($id)
@@ -125,7 +120,7 @@ class Home extends CI_Controller {
 		$avgwatt = $this->db->query("SELECT AVG(value) as avg FROM realtime_data WHERE node_id=".$id." AND function='p1' AND ts >= DATE(NOW())")->row();
 		$kwh = ($avgwatt->avg * $time_elapsed) / 1000;
 		$data['kwh'] = round($kwh,1);
-		$this->load->view('_mcinfo', $data);
+		$this->load->view('front/_mcinfo', $data);
 	}
 
 	public function get_time($shift)
@@ -166,51 +161,10 @@ class Home extends CI_Controller {
 		return $eff;
 	}
 
-	public function tes()
-	{
-		// $this->load->view('tes');
-		$start_time=5.5;//factory starting time
-		$time_elapsed=intval(date("H"))+intval(date("i"))/60 - $start_time;
-		echo $time_elapsed*255;
-	}
 
-	// public function tes1($shift)
-	// {
-	// 	date_default_timezone_set('Asia/Jakarta');
-	// 	if ($shift == "1") {
-	// 		$awal  = strtotime('05:30:00'); //waktu awal
-	// 		if (date('H:i:s') < date('H:i:s', strtotime('14:00:00'))) {
-	// 			$date = date('H:i:s');
-	// 			$akhir = strtotime($date); //waktu akhir
-	// 			$diff  = $akhir - $awal;
-	// 			$menit   = floor($diff / (60));
-	// 			$eff = ($menit - 30) * 4.25;	
-	// 			echo $eff;
-				
-	// 		}else{
-	// 			$date = date('14:00:00');
-	// 			$akhir = strtotime($date); //waktu akhir
-	// 			$diff  = $akhir - $awal;
-	// 			$menit   = floor($diff / (60));
-	// 			$eff = ($menit - 30) * 4.25;					
-	// 			echo $eff;
-	// 		}			
-	// 	}else{
-	// 		$awal  = strtotime('14:00:00'); //waktu awal
-	// 		if (date('H:i:s') < date('H:i:s', strtotime('14:00:00'))) {				
-	// 			$eff = 1;					
-	// 			echo $eff;
-	// 		}else{
-	// 			$date = date('H:i:s');
-	// 			$akhir = strtotime($date); //waktu akhir
-	// 			$diff  = $akhir - $awal;
-	// 			$menit   = floor($diff / (60));
-	// 			$eff = ($menit - 30) * 4.25;					
-	// 			echo $eff;
-	// 		}			
-	// 	}
-	// }
+
+
 }
 
-/* End of file Home.php */
-/* Location: ./application/controllers/Home.php */
+/* End of file Front.php */
+/* Location: ./application/controllers/Front.php */

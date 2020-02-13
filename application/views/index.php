@@ -42,7 +42,7 @@
 <aside id="leftsidebar" class="sidebar">
     <div class="navbar-brand">
         <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
-        <a href="index.html"><img src="<?php echo base_url() ?>assets/images/mas_icon.png" width="25" alt="Aero"><span class="m-l-5">Molding Dashboard</span></a>
+        <a href="<?php echo base_url() ?>"><img src="<?php echo base_url() ?>assets/images/logo-big2.png" height="30" class="ml-2" alt="Aero"></a>
     </div>
     <div class="menu">
         <ul class="list">
