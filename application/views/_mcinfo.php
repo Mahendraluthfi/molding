@@ -25,37 +25,39 @@
             <li class="col-6">
                 <div class="body bg-cyan" style="padding: 5px; margin: 2px;">
                     <i class="zmdi zmdi-chart"></i>
-                    <h4 style="margin-bottom: 0px;"><?php echo $morning; ?></h4><hr color="white" style="margin: 5px; padding: 1px;">
-                    <h4 style="margin-top: 0px;"><?php echo round($eff1,1) ?>%</h4>
-                    <span>Morning Count</span>
+                    <h5 style="margin-bottom: 0px;"><?php echo $morning.'/'.$cm; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
+                    <h5 style="margin: 0px;"><?php echo round($eff1,1) ?>%</h5>
+                    <span>Morning Count</span><br>
+                    <span><?php echo $sm ?></span>
                 </div>
             </li>
             <li class="col-6">
                 <div class="body bg-blush" style="padding: 5px; margin: 2px;">
                        <i class="zmdi zmdi-chart"></i>
-                    <h4 style="margin-bottom: 0px;"><?php echo $evening; ?></h4><hr color="white" style="margin: 5px; padding: 1px;">
-                    <h4 style="margin-top: 0px;"><?php echo round($eff2,1) ?>%</h4>
-                    <span>Evening Count</span>
+                    <h5 style="margin-bottom: 0px;"><?php echo $evening.'/'.$ce; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
+                    <h5 style="margin: 0px;"><?php echo round($eff2,1) ?>%</h5>
+                    <span>Evening Count</span><br>
+                    <span><?php echo $se ?></span>
                 </div>
             </li>
             <li class="col-6">
                 <div class="body bg-success" style="padding: 5px; margin: 2px; color: white;">
                     <i class="zmdi zmdi-chart"></i>
-                    <h4><?php echo $count; ?></h4>
+                    <h5 style="margin: 0px;"><?php echo $count.'/'.$ct; ?></h5>
                     <span>Today Count</span>
                 </div>
             </li>            
             <li class="col-6">
                 <div class="body bg-warning" style="padding: 5px; margin: 2px; color: white;">
                     <i class="zmdi zmdi-time"></i>
-                    <h4><?php echo $avg; ?>s</h4>
+                    <h5 style="margin: 0px;"><?php echo $avg; ?>s</h5>
                     <span>Avg. Cycle Time</span>
                 </div>
             </li>  
             <li class="col-12">
                 <div class="body bg-primary" style="padding: 5px; margin: 2px; color: white;">
                     <i class="zmdi zmdi-flash"></i>
-                    <h4><?php echo $kwh ?> Kwh</h4>
+                    <h5 style="margin: 0px;"><?php echo $kwh ?> Kwh</h5>
                     <span>Today Energy Consumption</span>
                 </div>
             </li>                                                          

@@ -1,4 +1,4 @@
-    <link href="<?php echo base_url() ?>assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+   
     
     <div class="body_scroll">
         <div class="block-header">
@@ -6,7 +6,7 @@
                 <div class="col-12">
                     <h2>Data Record</h2>    
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo base_url('home') ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
                         <li class="breadcrumb-item active">Data Record</li>
                     </ul>                
                     <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-menu"></i></button>
@@ -31,7 +31,7 @@
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3" style="padding: 5px;">
                                         <div class="form-group">
-                                            <select class="form-control show-tick" required="" name="mc">
+                                            <select class="form-control show-tick ms select2" required="" name="mc">
                                                 <option value="">-- Choose MC --</option>
                                                 <?php foreach ($node as $data) { ?>
                                                 <option value="<?php echo $data->node_id ?>"><?php echo $data->serial_no ?></option>

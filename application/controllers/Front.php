@@ -17,7 +17,7 @@ class Front extends CI_Controller {
 
 	public function machineload()
 	{
-		$data['node'] = $this->db->query("SELECT * FROM node_data ORDER BY position ASC")->result();
+		$data['node'] = $this->db->query("SELECT * FROM `node_data` GROUP BY line ORDER BY `line`  ASC")->result();
 		$this->load->view('front/_mcload', $data);
 	}
 
@@ -94,6 +94,27 @@ class Front extends CI_Controller {
 	public function mcinfo($id)
 	{
 		$get = $this->db->get_where('node_data', array('node_id' => $id))->row();			
+		$line = $this->db->get_where('node_data', array('line' => $get->line))->result();
+		$cm = 0;
+		$ce = 0;
+		$ct = 0;
+		foreach ($line as $key) {
+			$sql_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
+			$cm = ($sql_morning->today/$key->count_cycle) + $cm;
+			$sql_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
+			$ce = ($sql_evening->today/$key->count_cycle) + $ce;
+			$sql_today = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00')")->row();
+			$ct = ($sql_today->today/$key->count_cycle) + $ct;
+		}
+		$data['cm'] = $cm;
+		$data['ce'] = $ce;
+		$data['ct'] = $ct;
+		$get_side = $this->db->query("SELECT * FROM node_data WHERE NOT node_id = ".$id." AND line=".$get->line."")->row();
+	 	$side_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get_side->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
+		$side_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get_side->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
+		$data['side_morning'] = round($side_morning->today/$get_side->count_cycle,1);
+	 	$data['side_evening'] = round($side_evening->today/$get_side->count_cycle,1);
+
 
         $cek = $this->db->query("SELECT TIMESTAMPDIFF(SECOND, '".$get->last_online."', NOW()) AS now")->row();
                 
@@ -109,8 +130,8 @@ class Front extends CI_Controller {
 	 	$sql_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
 	 	$sql_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
 	 	$data['count'] = round($sql_today->today/$get->count_cycle,1);
-	 	$data['eff1'] = (($sql_morning->today/$get->count_cycle) / $this->get_time(1)) * 100;
-	 	$data['eff2'] = (($sql_evening->today/$get->count_cycle) / $this->get_time(2)) * 100;
+	 	$data['eff1'] = ($cm / $this->get_time(1)) * 100;
+	 	$data['eff2'] = ($ce / $this->get_time(2)) * 100;
 	 	$data['morning'] = round($sql_morning->today/$get->count_cycle,1);
 	 	$data['evening'] = round($sql_evening->today/$get->count_cycle,1);
 	 	$data['avg'] = round($avg_today->avg,1);
@@ -120,6 +141,15 @@ class Front extends CI_Controller {
 		$avgwatt = $this->db->query("SELECT AVG(value) as avg FROM realtime_data WHERE node_id=".$id." AND function='p1' AND ts >= DATE(NOW())")->row();
 		$kwh = ($avgwatt->avg * $time_elapsed) / 1000;
 		$data['kwh'] = round($kwh,1);
+		$get_shift = $this->db->get_where('plan_shift', array('date' => date('Y-m-d')));
+		if (empty($get_shift->num_rows())) {
+			$data['sm'] ="";
+			$data['se'] ="";
+		}else{
+			$gs = $get_shift->row();
+			$data['sm'] = $gs->morning;
+			$data['se'] = $gs->evening;
+		}
 		$this->load->view('front/_mcinfo', $data);
 	}
 
@@ -132,7 +162,7 @@ class Front extends CI_Controller {
 				$akhir = strtotime($date); //waktu akhir
 				$diff  = $akhir - $awal;
 				$menit   = floor($diff / (60));
-				$eff = ($menit) * 4;	
+				$eff = ($menit) * 4.25;	
 				// echo $eff;
 				
 			}else{
@@ -140,7 +170,7 @@ class Front extends CI_Controller {
 				$akhir = strtotime($date); //waktu akhir
 				$diff  = $akhir - $awal;
 				$menit   = floor($diff / (60));
-				$eff = ($menit) * 4;					
+				$eff = ($menit) * 4.25;					
 				// echo $eff;
 			}			
 		}else{
@@ -153,7 +183,7 @@ class Front extends CI_Controller {
 				$akhir = strtotime($date); //waktu akhir
 				$diff  = $akhir - $awal;
 				$menit   = floor($diff / (60));
-				$eff = ($menit) * 4;					
+				$eff = ($menit) * 4.25;					
 				// echo $eff;
 			}			
 		}

@@ -9,7 +9,7 @@
                 <div class="col-12">
                     <h2>Data Record</h2>    
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="<?php echo base_url() ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo base_url('home') ?>"><i class="zmdi zmdi-home"></i> Dashboard</a></li>
                         <li class="breadcrumb-item active">Data Record</li>
                     </ul>                
                     <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-menu"></i></button>
@@ -81,7 +81,8 @@
                                 <i class="zmdi zmdi-chart"></i>
                                 <h4 style="margin-bottom: 0px;"><?php echo $morning; ?></h4><hr color="white" style="margin: 5px; padding: 1px;">
                                 <h4 style="margin-top: 0px;"><?php echo round($eff1,1) ?>%</h4>
-                                <span>Morning Count</span>
+                                <span>Morning Count</span><br>
+                                <span><?php echo $sm ?></span>
                             </div>
                         </li>
                         <li class="col-6">
@@ -89,7 +90,8 @@
                                    <i class="zmdi zmdi-chart"></i>
                                 <h4 style="margin-bottom: 0px;"><?php echo $evening; ?></h4><hr color="white" style="margin: 5px; padding: 1px;">
                                 <h4 style="margin-top: 0px;"><?php echo round($eff2,1) ?>%</h4>
-                                <span>Evening Count</span>
+                                <span>Evening Count</span><br>
+                                <span><?php echo $se ?></span>
                             </div>
                         </li>
                         <li class="col-6">

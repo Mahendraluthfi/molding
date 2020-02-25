@@ -30,10 +30,13 @@
      <div class="body_scroll">
         <div class="block-header">
             <div class="row">
-                <div class="col-10">
+                <div class="col-4">
+                    <img src="<?php echo base_url() ?>assets/images/logo-big2.png" height="40" class="ml-2" alt="Aero">
+                </div>
+                <div class="col-4 text-center">
                     <h2>Dashboard Molding IoT</h2>                                        
                 </div>    
-                <div class="col-2 text-right">
+                <div class="col-4 text-right">
                     <a href="<?php echo base_url('login') ?>" class="btn btn-success"><i class="zmdi zmdi-sign-in"></i> Login</a>
                 </div>            
             </div>

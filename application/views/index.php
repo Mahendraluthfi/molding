@@ -10,9 +10,12 @@
 <!-- Favicon-->
 <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 <link rel="icon" href="<?php echo base_url() ?>assets/images/mas_icon.png" type="image/x-icon">
-<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css">
 <!-- Custom Css -->
+<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css">
+<link href="<?php echo base_url() ?>assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
+<link rel="stylesheet" href="<?php echo base_url() ?>assets/plugins/select2/select2.css" />
 <link rel="stylesheet" href="<?php echo base_url() ?>assets/css/style.min.css">
+
 </head>
 
 <body class="theme-cyan right_icon_toggle">
@@ -50,15 +53,16 @@
                 <div class="user-info">
                     <a class="image" href="#"><img src="<?php echo base_url() ?>assets/images/logo-admin.png" alt="User" height="32" width="25"></a>
                     <div class="detail" style="text-align: left;">
-                        <h4>Admin</h4>
-                        <!-- <small>Admin</small>                         -->
+                        <h4><?php echo strtoupper($this->session->userdata('username')); ?></h4>
+                        <small><?php echo $this->session->userdata('level'); ?></small>                        
                     </div>
                 </div>
             </li>
-            <li><a href="<?php echo base_url() ?>"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
-            <li><a href="#"><i class="zmdi zmdi-watch"></i><span>Downtime Monitoring</span></a></li>                                
+            <li><a href="<?php echo base_url('home') ?>"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
+            <li><a href="<?php echo $this->session->userdata('downtime_link') ?>"><i class="zmdi zmdi-watch"></i><span>Downtime Monitoring</span></a></li>                                
             <li><a href="#"><i class="zmdi zmdi-tag"></i><span>Output Monitoring</span></a></li>                                
             <li><a href="#"><i class="zmdi zmdi-badge-check"></i><span>Target Monitoring</span></a></li>                                
+            <li><a href="<?php echo $this->session->userdata('coo_link') ?>"><i class="zmdi zmdi-assignment-account"></i><span>Coordinators</span></a></li>                                
             <li><a href="<?php echo base_url('login/logout') ?>" onclick="return confirm('Are you sure ?')"><i class="zmdi zmdi-power"></i><span>Logout</span></a></li>
         </ul>
     </div>
@@ -113,9 +117,32 @@
     <?php $this->load->view($content); ?>
 </section>
 <!-- Jquery Core Js --> 
-<script src="<?php echo base_url() ?>assets/bundles/libscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
-<script src="<?php echo base_url() ?>assets/bundles/vendorscripts.bundle.js"></script> <!-- Lib Scripts Plugin Js --> 
+<script src="<?php echo base_url() ?>assets/bundles/libscripts.bundle.js"></script> 
+<script src="<?php echo base_url() ?>assets/bundles/vendorscripts.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/bundles/datatablescripts.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/dataTables.buttons.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/buttons.bootstrap4.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/buttons.colVis.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/buttons.flash.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/buttons.html5.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/jquery-datatable/buttons/buttons.print.min.js"></script>
+<script src="<?php echo base_url() ?>assets/plugins/select2/select2.min.js"></script> 
 
 <script src="<?php echo base_url() ?>assets/bundles/mainscripts.bundle.js"></script>
+<script src="<?php echo base_url() ?>assets/js/pages/tables/jquery-datatable.js"></script>
+
+<script src="<?php echo base_url() ?>assets/js/pages/forms/advanced-form-elements.js"></script> 
+    <script src="<?php echo base_url() ?>assets/plugins/momentjs/moment.js"></script> <!-- Moment Plugin Js --> 
+<!-- Bootstrap Material Datetime Picker Plugin Js -->
+    <script src="<?php echo base_url() ?>assets/plugins/bootstrap-material-datetimepicker/js/bootstrap-material-datetimepicker.js"></script> 
+    <script>
+        $('.datepicker').bootstrapMaterialDatePicker({
+            format: 'YYYY-MM-DD',
+            // clearButton: true,
+            weekStart: 1,
+            nowButton: true,
+            time: false
+        });
+    </script>
 </body>
 </html>

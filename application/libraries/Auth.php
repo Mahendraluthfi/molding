@@ -11,7 +11,7 @@ class Auth
 	}
 
 	function is_logged_in(){
-      if($this->ci->session->userdata('username') == '' && $this->ci->session->userdata('password') == ''){
+      if($this->ci->session->userdata('username') == '' && $this->ci->session->userdata('password') == '' && $this->ci->session->userdata('level') == ''){
          return false;
       }      
       return true;

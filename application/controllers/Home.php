@@ -21,7 +21,7 @@ class Home extends CI_Controller {
 
 	public function machineload()
 	{
-		$data['node'] = $this->db->query("SELECT * FROM node_data ORDER BY position ASC")->result();
+		$data['node'] = $this->db->query("SELECT * FROM `node_data` GROUP BY line ORDER BY `line`  ASC")->result();		
 		$this->load->view('_machineload', $data);
 	}
 
@@ -99,7 +99,22 @@ class Home extends CI_Controller {
 	public function mcinfo($id)
 	{
 		$get = $this->db->get_where('node_data', array('node_id' => $id))->row();			
+		$line = $this->db->get_where('node_data', array('line' => $get->line))->result();
+		$cm = 0;
+		$ce = 0;
+		$ct = 0;
+		foreach ($line as $key) {
+			$sql_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
+			$cm = ($sql_morning->today/$key->count_cycle) + $cm;
+			$sql_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
+			$ce = ($sql_evening->today/$key->count_cycle) + $ce;
+			$sql_today = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00')")->row();
+			$ct = ($sql_today->today/$key->count_cycle) + $ct;
+		}
 
+		$data['cm'] = $cm;
+		$data['ce'] = $ce;
+		$data['ct'] = $ct;
         $cek = $this->db->query("SELECT TIMESTAMPDIFF(SECOND, '".$get->last_online."', NOW()) AS now")->row();
                 
         if($cek->now < 60){
@@ -125,6 +140,15 @@ class Home extends CI_Controller {
 		$avgwatt = $this->db->query("SELECT AVG(value) as avg FROM realtime_data WHERE node_id=".$id." AND function='p1' AND ts >= DATE(NOW())")->row();
 		$kwh = ($avgwatt->avg * $time_elapsed) / 1000;
 		$data['kwh'] = round($kwh,1);
+		$get_shift = $this->db->get_where('plan_shift', array('date' => date('Y-m-d')));
+		if (empty($get_shift->num_rows())) {
+			$data['sm'] ="";
+			$data['se'] ="";
+		}else{
+			$gs = $get_shift->row();
+			$data['sm'] = $gs->morning;
+			$data['se'] = $gs->evening;
+		}
 		$this->load->view('_mcinfo', $data);
 	}
 

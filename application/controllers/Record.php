@@ -42,7 +42,15 @@ class Record extends CI_Controller {
 		$avgwatt = $this->db->query("SELECT AVG(value) as avg FROM master_data_1 WHERE node_id=".$id." AND function = 'p1' AND DATE(ts)='".$date."'")->row();
 		$kwh = ($avgwatt->avg * 17) / 1000;
 		$data['kwh'] = round($kwh,1);
-
+		$get_shift = $this->db->get_where('plan_shift', array('date' => $date));
+		if (empty($get_shift->num_rows())) {
+			$data['sm'] ="";
+			$data['se'] ="";
+		}else{
+			$gs = $get_shift->row();
+			$data['sm'] = $gs->morning;
+			$data['se'] = $gs->evening;
+		}
 		$data['node'] = $this->db->get('node_data')->result();
 
 		$data['date'] = $date;

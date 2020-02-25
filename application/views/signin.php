@@ -28,7 +28,7 @@
                     </div>
                     <div class="body">                        
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Username" name="username">
+                            <input type="text" class="form-control" placeholder="Username / EPF" name="username">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="zmdi zmdi-account-circle"></i></span>
                             </div>

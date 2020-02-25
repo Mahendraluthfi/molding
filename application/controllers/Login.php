@@ -17,22 +17,38 @@ class Login extends CI_Controller {
 		$username = $this->input->post('username');
 		$password = md5($this->input->post('password'));
 		$cek = $this->db->get_where('user', array('username' => $username, 'password' => $password))->num_rows();
-		if (empty($cek)) {
+		$cek2 = $this->db->get_where('koordinator', array('epf' => $username, 'password' => $password))->num_rows();
+		if (!empty($cek)) {
+			$array = array(
+				'username' => $username,
+				'password' => $password,
+				'level' => 'Admin',
+				'downtime_link' => base_url('downtime'),
+				'coo_link' => base_url('coordinator')
+			);
+			
+			$this->session->set_userdata( $array );
+
+			redirect('home');
+		}elseif(!empty($cek2)){
+			$array = array(
+				'username' => $username,
+				'password' => $password,
+				'level' => 'Coordinator',
+				'downtime_link' => base_url('co/downtime'),
+				'coo_link' => base_url('co/coordinator')				
+			);
+			
+			$this->session->set_userdata( $array );
+
+			redirect('home');
+		}else{
 			$this->session->set_flashdata('msg', '
 				<div class="alert alert-danger text-center">                             
                      Username or Password is wrong !
                  </div>   
 				');
 			redirect('login','refresh');
-		}else{
-			$array = array(
-				'username' => $username,
-				'password' => $password
-			);
-			
-			$this->session->set_userdata( $array );
-
-			redirect('home');
 		}
 	}
 
