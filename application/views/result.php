@@ -117,7 +117,7 @@
                         </li>                                                          
                     </ul>
 
-                                </div>
+                    </div>
                 </div>                
             </div>
             <div class="col-9" style="padding: 5px;">

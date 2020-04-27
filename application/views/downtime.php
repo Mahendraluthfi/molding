@@ -25,11 +25,11 @@
                                 <h5>Downtime Records</h5>                                
                             </div>
                             <div class="col text-right">
-                                <a href="<?php echo base_url('downtime/report') ?>" class="btn btn-success"><i class="zmdi zmdi-file"></i> Report</a>                                
-                                <button type="button" class="btn btn-primary" onclick="add()"><i class="zmdi zmdi-plus"></i> New</button>                                
+                                <a href="<?php echo base_url('downtime/report') ?>" class="btn btn-success"><i class="zmdi zmdi-file"></i> Report</a>
+                                <button type="button" class="btn btn-primary" onclick="add()"><i class="zmdi zmdi-plus"></i> New</button>
                             </div>
                         </div>
-                         <div class="table-responsive">
+                        <div class="table-responsive">
                             <?php echo $this->session->flashdata('msg'); ?>
                                 <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                                     <thead>
@@ -74,7 +74,7 @@
                                         <?php } ?>
                                     </tbody>
                                 </table>
-                            </div>
+                        </div>
                     
                         </div>
                     </div>
@@ -83,7 +83,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -163,8 +163,10 @@
                                         <option value="Head & Female Adjustment">Head & Female Adjustment</option>
                                         <option value="Colour Change">Colour Change</option>
                                         <option value="Size Change">Size Change</option>
+                                        <option value="Style Change">Style Change</option>
                                         <option value="Reset due to not meet Approved Hanger">Reset due to not meet Approved Hanger</option>
                                         <option value="Batch Change">Batch Change</option>
+                                        <option value="Shine Mark">Shine Mark</option>
                                         <option value="Ring Mark">Ring Mark</option>
                                         <option value="Over heat depth issue">Over heat depth issue</option>
                                         <option value="Looseness Issue">Looseness Issue</option>
@@ -189,13 +191,12 @@
                             </div>
                         </div>
                     </div>  
- 
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-info waves-effect">Save</button>
-                <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
-            </div>
-            <?php echo form_close(); ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-info waves-effect">Save</button>
+                        <button type="button" class="btn btn-danger waves-effect" data-dismiss="modal">Close</button>
+                    </div>
+                <?php echo form_close(); ?>
         </div>
     </div>
 </div>
@@ -203,6 +204,8 @@
 <script>
     function add() {
         $("#frm")[0].reset();
+        $('[name="mc"]').val('');
+        $('[name="mc"]').trigger('change');            
         $('#frm').attr('action','<?php echo base_url('downtime/add') ?>'); 
         $('.title').text('Add Downtime Report');   
         $('#defaultModal').modal('show');

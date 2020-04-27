@@ -94,27 +94,7 @@ class Front extends CI_Controller {
 	public function mcinfo($id)
 	{
 		$get = $this->db->get_where('node_data', array('node_id' => $id))->row();			
-		$line = $this->db->get_where('node_data', array('line' => $get->line))->result();
-		$cm = 0;
-		$ce = 0;
-		$ct = 0;
-		foreach ($line as $key) {
-			$sql_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
-			$cm = ($sql_morning->today/$key->count_cycle) + $cm;
-			$sql_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
-			$ce = ($sql_evening->today/$key->count_cycle) + $ce;
-			$sql_today = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$key->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00')")->row();
-			$ct = ($sql_today->today/$key->count_cycle) + $ct;
-		}
-		$data['cm'] = $cm;
-		$data['ce'] = $ce;
-		$data['ct'] = $ct;
-		$get_side = $this->db->query("SELECT * FROM node_data WHERE NOT node_id = ".$id." AND line=".$get->line."")->row();
-	 	$side_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get_side->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
-		$side_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get_side->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
-		$data['side_morning'] = round($side_morning->today/$get_side->count_cycle,1);
-	 	$data['side_evening'] = round($side_evening->today/$get_side->count_cycle,1);
-
+		$get2 = $this->db->query("SELECT * FROM `node_data` WHERE line ='$get->line'AND NOT node_id = '$id'")->row();
 
         $cek = $this->db->query("SELECT TIMESTAMPDIFF(SECOND, '".$get->last_online."', NOW()) AS now")->row();
                 
@@ -129,13 +109,28 @@ class Front extends CI_Controller {
 	 	$sql_today = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00')")->row();
 	 	$sql_evening = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
 	 	$sql_morning = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
+
+	 	//
+
+	 	// $avg_today2 = $this->db->query("SELECT AVG(value) as avg FROM realtime_data WHERE node_id=".$get2->node_id." AND function='d2' AND value BETWEEN 1 AND 75 AND ts >= DATE(NOW())")->row();
+	 	$sql_today2 = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get2->node_id." AND function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00')")->row();
+	 	$sql_evening2 = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get2->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('14:00:00')")->row();
+	 	$sql_morning2 = $this->db->query("SELECT COUNT(DISTINCT time) AS today FROM realtime_data WHERE node_id=".$get2->node_id." and function='d2' AND time >= DATE(NOW()) AND time <= DATE_ADD(NOW(),INTERVAL 1 DAY) AND ts >= TIME('05:30:00') AND ts <= TIME('14:00:00')")->row();
+	 	//
+
 	 	$data['count'] = round($sql_today->today/$get->count_cycle,1);
-	 	$data['eff1'] = ($cm / $this->get_time(1)) * 100;
-	 	$data['eff2'] = ($ce / $this->get_time(2)) * 100;
-	 	$data['morning'] = round($sql_morning->today/$get->count_cycle,1);
-	 	$data['evening'] = round($sql_evening->today/$get->count_cycle,1);
+	 	// $data['efftot'] = (round($sql_today->today/$get->count_cycle,1) / $this->toteff()) * 100;
+		$data['efftot'] = ((round($sql_today->today/$get->count_cycle,1)+(round($sql_today2->today/$get2->count_cycle,1))) / ($this->tes(1)+$this->tes(2)))* 100;	 	
+	 	$data['eff1'] = (($sql_morning->today/$get->count_cycle + $sql_morning2->today/$get2->count_cycle) / $this->tes(1)) * 100;
+	 	$data['eff2'] = (($sql_evening->today/$get->count_cycle + $sql_evening2->today/$get2->count_cycle) / $this->tes(2)) * 100;
+	 	$data['mca1'] = round($sql_morning->today/$get->count_cycle,1);
+	 	$data['mca2'] = round($sql_evening->today/$get->count_cycle,1);
+	 	$data['mcb1'] = round($sql_morning2->today/$get2->count_cycle,1);
+	 	$data['mcb2'] = round($sql_evening2->today/$get2->count_cycle,1);	 	
+
 	 	$data['avg'] = round($avg_today->avg,1);
 		$data['mc'] = $get;
+	 	// $data['eff'] = ($ct / 2040) * 100;		
 		$start_time=5.5;//factory starting time
 		$time_elapsed=intval(date("H"))+intval(date("i"))/60 - $start_time;
 		$avgwatt = $this->db->query("SELECT AVG(value) as avg FROM realtime_data WHERE node_id=".$id." AND function='p1' AND ts >= DATE(NOW())")->row();
@@ -150,7 +145,7 @@ class Front extends CI_Controller {
 			$data['sm'] = $gs->morning;
 			$data['se'] = $gs->evening;
 		}
-		$this->load->view('front/_mcinfo', $data);
+		$this->load->view('_mcinfo', $data);
 	}
 
 	public function get_time($shift)
@@ -191,7 +186,51 @@ class Front extends CI_Controller {
 		return $eff;
 	}
 
+	public function toteff()
+	{
+		$awal = strtotime('05:30:00');
+		$date = date('H:i:s');
+		$akhir = strtotime($date); //waktu akhir
+		$diff  = $akhir - $awal;
+		$menit   = floor($diff / (60));
+		$eff = ($menit) * 4.25;	
+		return $eff;
+	}
 
+	public function tes($type)
+	{
+		if ($type==1) {
+			$awal = strtotime('05:30:00');
+			$date = date('H:i:s');
+			$akhir = strtotime($date); //waktu akhir
+			$diff  = $akhir - $awal;
+			$nonjam   = $diff/60/60 + 1;
+			$jam   = floor($diff/60/60) + 1;
+			if ($date >= '14:00:00') {
+				$eff = 8*255;
+			}elseif ($nonjam >= 5) {
+				$eff = floor($nonjam-0.5)*255;		
+			}else{
+				$eff = $jam*255;
+			}				
+		}elseif($type==2){
+			$awal = strtotime('14:00:00');
+			$date = date('H:i:s');
+			$akhir = strtotime($date); //waktu akhir
+			$diff  = $akhir - $awal;
+			$nonjam   = $diff/60/60 + 1;
+			$jam   = floor($diff/60/60) + 1;
+			if ($date >= '22:30:00') {
+				$eff = 8*255;
+			}elseif ($nonjam >= 5) {
+				$eff = floor($nonjam-0.5)*255;		
+			}else{
+				$eff = $jam*255;
+			}					
+		}
+
+		return $eff;
+	}
 
 
 }

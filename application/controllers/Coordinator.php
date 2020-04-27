@@ -17,6 +17,7 @@ class Coordinator extends CI_Controller {
 	{
 		$data['get'] = $this->db->get('koordinator')->result();
 		$data['content'] = 'coor';
+		$data['title'] = 'Coordinator';
 		$this->load->view('index', $data);
 	}
 

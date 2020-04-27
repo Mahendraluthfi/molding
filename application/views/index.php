@@ -6,7 +6,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
 
-<title>Home</title>
+<title><?php echo $title ?></title>
 <!-- Favicon-->
 <!-- <link rel="icon" href="favicon.ico" type="image/x-icon"> -->
 <link rel="icon" href="<?php echo base_url() ?>assets/images/mas_icon.png" type="image/x-icon">
@@ -60,9 +60,14 @@
             </li>
             <li><a href="<?php echo base_url('home') ?>"><i class="zmdi zmdi-home"></i><span>Dashboard</span></a></li>
             <li><a href="<?php echo $this->session->userdata('downtime_link') ?>"><i class="zmdi zmdi-watch"></i><span>Downtime Monitoring</span></a></li>                                
-            <li><a href="#"><i class="zmdi zmdi-tag"></i><span>Output Monitoring</span></a></li>                                
-            <li><a href="#"><i class="zmdi zmdi-badge-check"></i><span>Target Monitoring</span></a></li>                                
-            <li><a href="<?php echo $this->session->userdata('coo_link') ?>"><i class="zmdi zmdi-assignment-account"></i><span>Coordinators</span></a></li>                                
+            <li><a href="javascript:void(0);" class="menu-toggle waves-effect waves-block"><i class="zmdi zmdi-tag"></i><span>Machine Monitoring</span></a>
+                <ul class="ml-menu" style="display: none;">
+                    <li><a href="<?php echo base_url('output') ?>">Output</a></li>                                
+                    <li><a href="<?php echo base_url('soldering') ?>">Soldering</a></li>                                                    
+                </ul>
+            </li>
+            <li><a href="<?php echo base_url('target') ?>"><i class="zmdi zmdi-badge-check"></i><span>Target Monitoring</span></a></li>                                
+            <?php echo $this->session->userdata('link'); ?>                              
             <li><a href="<?php echo base_url('login/logout') ?>" onclick="return confirm('Are you sure ?')"><i class="zmdi zmdi-power"></i><span>Logout</span></a></li>
         </ul>
     </div>
@@ -139,7 +144,7 @@
         $('.datepicker').bootstrapMaterialDatePicker({
             format: 'YYYY-MM-DD',
             // clearButton: true,
-            weekStart: 1,
+            weekStart: 1,            
             nowButton: true,
             time: false
         });

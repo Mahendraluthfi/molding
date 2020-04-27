@@ -17,6 +17,7 @@ class Setting extends CI_Controller {
 	{
 		$data['shift'] = $this->db->query("SELECT * FROM plan_shift ORDER BY date DESC")->result();
 		$data['content'] = 'setting';
+		$data['title'] = 'Setting Shift';
 		$this->load->view('index', $data);
 	}
 

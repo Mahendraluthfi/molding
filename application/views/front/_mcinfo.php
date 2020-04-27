@@ -1,4 +1,4 @@
-    
+        
         <div class="form-group row" style="margin-bottom: 0px;">
             <label class="col-10">
                 <h6 class="text-primary">Machine Information</h6>                
@@ -24,8 +24,8 @@
             <li class="col-6">
                 <div class="body bg-cyan" style="padding: 5px; margin: 2px;">
                     <i class="zmdi zmdi-chart"></i>
-                    <h5 style="margin-bottom: 0px;"><?php echo $morning.'/'.$side_morning; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
-                    <h5 style="margin: 0px;"><?php echo $cm.'/'.round($eff1,1) ?>%</h5>
+                    <h5 style="margin-bottom: 0px;"><?php echo $mca1.'/'.$mcb1; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
+                    <h5 style="margin: 0px;"><?php echo $mca1+$mcb1.'/'.round($eff1,1) ?>%</h5>
                     <span>Morning Count</span><br>
                     <span><?php echo $sm ?></span>
                 </div>
@@ -33,8 +33,8 @@
             <li class="col-6">
                 <div class="body bg-blush" style="padding: 5px; margin: 2px;">
                        <i class="zmdi zmdi-chart"></i>
-                    <h5 style="margin-bottom: 0px;"><?php echo $evening.'/'.$side_evening; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
-                    <h5 style="margin: 0px;"><?php echo $ce.'/'.round($eff2,1) ?>%</h5>
+                    <h5 style="margin-bottom: 0px;"><?php echo $mca2.'/'.$mcb2; ?></h5><hr color="white" style="margin: 5px; padding: 1px;">
+                    <h5 style="margin: 0px;"><?php echo $mca2+$mcb2.'/'.round($eff2,1) ?>%</h5>
                     <span>Evening Count</span><br>
                     <span><?php echo $se ?></span>
                 </div>
@@ -42,7 +42,7 @@
             <li class="col-6">
                 <div class="body bg-success" style="padding: 5px; margin: 2px; color: white;">
                     <i class="zmdi zmdi-chart"></i>
-                    <h5 style="margin: 0px;"><?php echo $count.'/'.$ct; ?></h5>
+                    <h5 style="margin: 0px;"><?php echo $mca1+$mcb1+$mca2+$mcb2.'/'.round($efftot,1).'%'; ?></h5>                    
                     <span>Today Count</span>
                 </div>
             </li>            

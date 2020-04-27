@@ -16,6 +16,7 @@ class Record extends CI_Controller {
 	public function index()
 	{
 		$data['content'] = 'record';
+		$data['title'] = 'Data Record';
 		$data['node'] = $this->db->get('node_data')->result();
 		$this->load->view('index', $data);
 	}
@@ -56,6 +57,7 @@ class Record extends CI_Controller {
 		$data['date'] = $date;
 		$data['id'] = $id;
 		$data['content'] = 'result';
+		$data['title'] = 'Data Record';
 
 		//
 		$data['cc'] = $get->count_cycle;

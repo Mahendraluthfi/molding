@@ -23,8 +23,8 @@ class Login extends CI_Controller {
 				'username' => $username,
 				'password' => $password,
 				'level' => 'Admin',
-				'downtime_link' => base_url('downtime'),
-				'coo_link' => base_url('coordinator')
+				'downtime_link' => base_url('downtime'),				
+				'link' => '<li><a href="'.base_url('coordinator').'"><i class="zmdi zmdi-assignment-account"></i><span>Coordinators</span></a></li>'
 			);
 			
 			$this->session->set_userdata( $array );
@@ -36,7 +36,7 @@ class Login extends CI_Controller {
 				'password' => $password,
 				'level' => 'Coordinator',
 				'downtime_link' => base_url('co/downtime'),
-				'coo_link' => base_url('co/coordinator')				
+				'link' => ''						
 			);
 			
 			$this->session->set_userdata( $array );
